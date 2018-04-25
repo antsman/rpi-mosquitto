@@ -18,32 +18,26 @@ pipeline {
             steps {
                 sh "docker run -d --rm --name $CONTAINER_NAME $IMAGE_NAME:$IMAGE_TAG"
                 sh "docker exec -t $CONTAINER_NAME mosquitto -h | grep version"
-/*
-                sh "docker exec -t --user root $CONTAINER_NAME sh -c 'apt-get -qq update && apt-get -qq -y install wget'"
-                sh "./get-java-version.sh $CONTAINER_NAME"   // Get used java version in started container, store in env.properties
+                sh "./get-versions.sh $CONTAINER_NAME"   // Get mosquitto and alpine version in started container, store in env.properties
                 load './env.properties'
-                echo "$JENKINS_VERSION"
-                echo "$JAVA_VERSION"
-                sh 'date'
-                sleep 3600
-                sh "docker exec -t $CONTAINER_NAME wget --spider http://localhost:8080 | grep -e connected -e Forbidden"
-*/
+                echo "$MOSQUITTO_VERSION"
+                echo "$ALPINE_VERSION"
                 sh "time docker stop $CONTAINER_NAME"
             }
         }
         stage('DEPLOY') {
             when {
-                branch 'testing'
+                branch 'master'
             }
             steps {
                 echo 'Build succeeded, push image ..'
                 sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest"
-                sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:$JENKINS_VERSION"
-                sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:$JENKINS_VERSION-$JAVA_VERSION"
+                sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:$MOSQUITTO_VERSION"
+                sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:$MOSQUITTO_VERSION-$ALPINE_VERSION"
                 sh "docker login -u $DOCKER_CREDS_USR -p $DOCKER_CREDS_PSW"
                 sh "docker push $IMAGE_NAME:latest"
-                sh "docker push $IMAGE_NAME:$JENKINS_VERSION"
-                sh "docker push $IMAGE_NAME:$JENKINS_VERSION-$JAVA_VERSION"
+                sh "docker push $IMAGE_NAME:$MOSQUITTO_VERSION"
+                sh "docker push $IMAGE_NAME:$MOSQUITTO_VERSION-$ALPINE_VERSION"
             }
         }
     }
