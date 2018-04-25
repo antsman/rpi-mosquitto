@@ -17,7 +17,7 @@ Three mount points have been created in the image to be used for configuration, 
 When running the image, the default configuration values are used.
 To use a custom configuration file, mount a **local** configuration file to `/mosquitto/config/mosquitto.conf`
 ```
-docker run -it -p 1883:1883 -p 9001:9001 -v <path-to-configuration-file>:/mosquitto/config/mosquitto.conf eclipse-mosquitto:1.4.14
+docker run -it -p 1883:1883 -p 9001:9001 -v <path-to-configuration-file>:/mosquitto/config/mosquitto.conf rpi-mosquitto
 ```
 
 Configuration can be changed to:
@@ -38,13 +38,13 @@ log_dest file /mosquitto/log/mosquitto.log
 ## Build
 Build the image:
 ```
-docker build -t eclipse-mosquitto:1.4.14 .
+docker build -t rpi-mosquitto .
 ```
 
 ## Run
 Run a container using the new image:
 ```
-docker run -it -p 1883:1883 -p 9001:9001 -v <path-to-configuration-file>:/mosquitto/config/mosquitto.conf -v /mosquitto/data -v /mosquitto/log eclipse-mosquitto:1.4.14
+docker run -it -p 1883:1883 -p 9001:9001 -v <path-to-configuration-file>:/mosquitto/config/mosquitto.conf -v /mosquitto/data -v /mosquitto/log rpi-mosquitto
 ```
 :boom: if the mosquitto configuration (mosquitto.conf) was modified
 to use non-default ports, the docker run command will need to be updated
