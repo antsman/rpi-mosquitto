@@ -17,7 +17,7 @@ pipeline {
         stage('TEST') {
             steps {
                 sh "docker run -d --rm --name $CONTAINER_NAME $IMAGE_NAME:$IMAGE_TAG"
-                sh "docker exec -t --user root $CONTAINER_NAME mosquitto -h"
+                sh "docker exec -t --user root $CONTAINER_NAME mosquitto -h | grep version"
 /*
                 sh "docker exec -t --user root $CONTAINER_NAME sh -c 'apt-get -qq update && apt-get -qq -y install wget'"
                 sh "./get-java-version.sh $CONTAINER_NAME"   // Get used java version in started container, store in env.properties
