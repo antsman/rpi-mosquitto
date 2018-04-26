@@ -20,7 +20,8 @@ pipeline {
                 sh "docker exec -t $CONTAINER_NAME mosquitto -h | grep version"
                 sh "./get-versions.sh $CONTAINER_NAME"   // Get mosquitto and alpine version in started container, store in env.properties
                 load './env.properties'
-                echo "Mosquitto: $MOSQUITTO_VERSION / Alpine: $ALPINE_VERSION"
+                echo "$MOSQUITTO_VERSION"
+                echo "$ALPINE_VERSION"
                 sh "time docker stop $CONTAINER_NAME"
             }
         }
