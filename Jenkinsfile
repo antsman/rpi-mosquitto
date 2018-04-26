@@ -33,12 +33,10 @@ pipeline {
                 sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest"
                 sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:$MOSQUITTO_VERSION"
                 sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:$MOSQUITTO_VERSION-$ALPINE_VERSION"
-/*
                 sh "docker login -u $DOCKER_CREDS_USR -p $DOCKER_CREDS_PSW"
                 sh "docker push $IMAGE_NAME:latest"
                 sh "docker push $IMAGE_NAME:$MOSQUITTO_VERSION"
                 sh "docker push $IMAGE_NAME:$MOSQUITTO_VERSION-$ALPINE_VERSION"
-*/
             }
         }
     }
