@@ -20,8 +20,7 @@ pipeline {
                 sh "docker exec -t $CONTAINER_NAME mosquitto -h | grep version"
                 sh "./get-versions.sh $CONTAINER_NAME"   // Get mosquitto and alpine version in started container, store in env.properties
                 load './env.properties'
-                echo "$MOSQUITTO_VERSION"
-                echo "$ALPINE_VERSION"
+                echo "Mosquitto: $MOSQUITTO_VERSION, Alpine: $ALPINE_VERSION"
                 sh "time docker stop $CONTAINER_NAME"
             }
         }
@@ -34,8 +33,8 @@ pipeline {
                 sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest"
                 sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:$MOSQUITTO_VERSION"
                 sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:$MOSQUITTO_VERSION-$ALPINE_VERSION"
-                sh "docker login -u $DOCKER_CREDS_USR -p $DOCKER_CREDS_PSW"
 /*
+                sh "docker login -u $DOCKER_CREDS_USR -p $DOCKER_CREDS_PSW"
                 sh "docker push $IMAGE_NAME:latest"
                 sh "docker push $IMAGE_NAME:$MOSQUITTO_VERSION"
                 sh "docker push $IMAGE_NAME:$MOSQUITTO_VERSION-$ALPINE_VERSION"
@@ -49,3 +48,4 @@ pipeline {
         }
     }
 }
+
