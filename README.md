@@ -1,3 +1,7 @@
+# Better check ;)
+- https://hub.docker.com/_/eclipse-mosquitto?tab=tags
+- Very good alpine based images for arm/Pi also
+
 # Mosquitto Docker Image on Raspberry Pi / ARM
 - Based on Eclipse Mosquitto v1.4.14 Docker Image
 - Adjusted for Rasperry Pi
