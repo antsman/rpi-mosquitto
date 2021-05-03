@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:3.12
 
 LABEL Description="Eclipse Mosquitto MQTT Broker"
 LABEL Maintainer="Aivo Antsman"
@@ -21,4 +21,3 @@ RUN apk --no-cache add mosquitto && \
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/usr/sbin/mosquitto", "-c", "/mosquitto/config/mosquitto.conf"]
-
